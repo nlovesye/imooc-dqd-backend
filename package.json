@@ -49,10 +49,5 @@
     "webpack-cli": "4.10.0",
     "webpack-merge": "5.8.0",
     "webpack-node-externals": "3.0.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "npx husky add .husky/commit-msg \"npx commitlint --edit $1\""
-    }
   }
 }
