@@ -8,7 +8,8 @@
     "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress",
     "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node --inspect ./src/index.js",
     "build": "cross-env NODE_ENV=prod webpack --config config/webpack.config.prod.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
