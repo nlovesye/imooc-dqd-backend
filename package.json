@@ -1,5 +1,5 @@
 {
-  "name": "imooc-dqd-koa",
+  "name": "imooc-dqd-backend",
   "version": "1.0.0",
   "description": "慕课网大前端-koa",
   "main": "index.js",

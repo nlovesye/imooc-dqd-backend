@@ -4,7 +4,15 @@ class PublicController {
   constructor() {}
 
   async getCaptcha(ctx) {
-    const captcha = svgCaptcha.create({});
+    const captcha = svgCaptcha.create({
+      size: 4,
+      ignoreChars: "0o1il",
+      color: true,
+      noise: Math.floor(Math.random() * 5),
+      width: 150,
+      height: 38,
+      fontSize: 36,
+    });
     ctx.body = {
       code: 200,
       data: captcha,
