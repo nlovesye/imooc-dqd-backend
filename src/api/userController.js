@@ -1,3 +1,7 @@
+import moment from "moment";
+
+import sendMail from "../config/MailConfig";
+
 class UserController {
   constructor() {}
 
@@ -35,13 +39,27 @@ class UserController {
     }
   }
 
-  async forget() {
-    let { body } = ctx.request;
-    ctx.body = {
-      code: 200,
-      data: { ...body },
-      message: "邮件发送成功",
-    };
+  async forget(ctx) {
+    try {
+      const {
+        body: { code, email, userName },
+      } = ctx.request;
+      const expire = moment().add(30, "minutes").format("YYYY-MM-DD HH:mm:ss");
+      const sendInfo = {
+        code,
+        expire,
+        email,
+        user: userName,
+      };
+      const result = await sendMail(sendInfo);
+      ctx.body = {
+        code: 200,
+        data: result,
+        message: "邮件发送成功",
+      };
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

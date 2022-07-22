@@ -5,7 +5,7 @@ const router = new Router();
 
 router.prefix("/user");
 
-router.post("/getUserInfo", userController.getUserInfo);
 router.post("/forget", userController.forget);
+router.post("/getUserInfo", userController.getUserInfo);
 
 export default router;
