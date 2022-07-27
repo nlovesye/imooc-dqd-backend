@@ -1,11 +1,12 @@
 const path = require("path");
-const nodeExcternals = require("webpack-node-externals");
+const nodeExternals = require("webpack-node-externals");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { APP_PATH, DIST_PATH, resolve } = require("./util");
 
 const webpackconfig = {
-  target: "node",
+  // target: "node",
+  externalsPresets: { node: true },
   entry: {
     server: path.join(APP_PATH, "index.js"),
   },
@@ -24,7 +25,7 @@ const webpackconfig = {
       },
     ],
   },
-  externals: [nodeExcternals()],
+  externals: [nodeExternals()],
   plugins: [
     new CleanWebpackPlugin(),
     new DefinePlugin({
