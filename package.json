@@ -32,6 +32,7 @@
     "koa-router": "11.0.1",
     "koa-static": "5.0.0",
     "moment": "2.29.4",
+    "mongoose": "6.5.0",
     "nodemailer": "6.7.7",
     "svg-captcha": "1.4.0"
   },
