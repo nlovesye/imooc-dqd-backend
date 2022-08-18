@@ -6,8 +6,10 @@
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
     "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress",
-    "dev": "cross-env NODE_ENV=dev nodemon --exec babel-node --inspect=7100 ./src/index.js",
+    "dev:nodemon": "cross-env NODE_ENV=dev nodemon --exec babel-node --inspect=7100 ./src/index.js",
+    "watch": "cross-env NODE_ENV=dev webpack --watch --progress --config config/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=prod webpack --config config/webpack.config.prod.js",
+    "debug": "nodemon --inspect=7100 ./dist/server.bundle.js",
     "clean": "rimraf dist",
     "prepare": "husky install"
   },
