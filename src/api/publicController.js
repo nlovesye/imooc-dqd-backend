@@ -1,5 +1,5 @@
 import svgCaptcha from "svg-captcha";
-import { setValue, getValue } from "@/config/RedisConfig";
+import { setValue } from "@/config/RedisConfig";
 
 class PublicController {
   constructor() {}
@@ -16,8 +16,7 @@ class PublicController {
       fontSize: 36,
     });
     // 图片验证码数据超时10分钟
-    setValue(sid, captcha.text, 10 * 60);
-    const rt = await getValue(sid);
+    await setValue(sid, captcha.text, 10 * 60);
     ctx.body = {
       code: 200,
       data: captcha,

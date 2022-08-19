@@ -4,6 +4,19 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const { DefinePlugin } = require("webpack");
 const { APP_PATH, DIST_PATH, resolve } = require("./util");
 
+const plugins = [new CleanWebpackPlugin()];
+if (typeof process.env.NODE_ENV === "undefined") {
+  plugins.push(
+    new DefinePlugin({
+      "process.env.NODE_ENV": ["prod", "production"].includes(
+        process.env.NODE_ENV
+      )
+        ? "'production'"
+        : "'development'",
+    })
+  );
+}
+
 const webpackconfig = {
   // target: "node",
   externalsPresets: { node: true },
@@ -31,16 +44,7 @@ const webpackconfig = {
     ],
   },
   externals: [nodeExternals()],
-  plugins: [
-    new CleanWebpackPlugin(),
-    new DefinePlugin({
-      "process.env": {
-        NODE_ENV: ["prod", "production"].includes(process.env.NODE_ENV)
-          ? "'production'"
-          : "'development'",
-      },
-    }),
-  ],
+  plugins,
 };
 
 module.exports = webpackconfig;

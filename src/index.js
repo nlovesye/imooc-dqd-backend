@@ -7,8 +7,11 @@ import jsonUtil from "koa-json";
 import cors from "@koa/cors";
 import compose from "koa-compose";
 import compress from "koa-compress";
+import jwt from "koa-jwt";
 
 import router from "./routes";
+import { JWT_SECRET, API_LISTENING_PORT } from "./config";
+import errorHandle from "./middleware/ErrorHandle";
 
 const app = new Koa();
 
@@ -20,6 +23,8 @@ const middleware = compose([
   cors(),
   jsonUtil({ pretty: false, param: "pretty" }),
   helmet(),
+  errorHandle,
+  jwt({ secret: JWT_SECRET }).unless({ path: [/^\/public/, /^\/user\/login/] }),
 ]);
 
 if (!isDevMode) {
@@ -29,4 +34,6 @@ if (!isDevMode) {
 app.use(middleware);
 app.use(router());
 
-app.listen(7000);
+app.listen(API_LISTENING_PORT).on("listening", () => {
+  console.log(`>>> RESTFUL API listening on port: ${API_LISTENING_PORT}`);
+});

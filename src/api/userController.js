@@ -1,4 +1,8 @@
 import moment from "moment";
+import jwt from "jsonwebtoken";
+
+import { createResult } from "@/utils";
+import { JWT_SECRET } from "@/config";
 
 import sendMail from "../config/MailConfig";
 
@@ -13,28 +17,24 @@ class UserController {
       typeof body.email === "undefined"
     ) {
       ctx.status = 404;
-      ctx.body = {
+      ctx.body = createResult({
         code: 404,
-        message: "name与email不得为空",
-      };
+        msg: "name与email不得为空",
+      });
       return;
     } else {
       if (
         typeof ctx.header.role !== "undefined" &&
         ctx.header.role === "admin"
       ) {
-        ctx.body = {
-          code: 200,
-          data: { ...body },
-          message: "上传成功",
-        };
+        ctx.body = createResult({ data: { ...body }, msg: "上传成功" });
         return;
       } else {
         ctx.status = 401;
-        ctx.body = {
+        ctx.body = createResult({
           code: 401,
-          message: "unauthorized post",
-        };
+          msg: "unauthorized post",
+        });
       }
     }
   }
@@ -52,14 +52,26 @@ class UserController {
         user: userName,
       };
       const result = await sendMail(sendInfo);
-      ctx.body = {
-        code: 200,
+      ctx.body = createResult({
         data: result,
-        message: "邮件发送成功",
-      };
+        msg: "邮件发送成功",
+      });
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async login(ctx) {
+    const token = jwt.sign(
+      {
+        data: "userId",
+      },
+      JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+    ctx.body = createResult({
+      data: token,
+    });
   }
 }
 
