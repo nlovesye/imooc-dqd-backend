@@ -7,7 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js",
     "webpack:debug": "node --inspect-brk ./node_modules/.bin/webpack --inline --progress",
     "build": "cross-env NODE_ENV=prod webpack --config config/webpack.config.prod.js",
-    "watch": "cross-env NODE_ENV=dev webpack watch --progress --config config/webpack.config.dev.js",
+    "watch": "cross-env NODE_ENV=dev webpack --watch --progress --config config/webpack.config.dev.js",
     "debug": "nodemon --inspect=7100 ./dist/server.bundle.js",
     "dev": "npm-run-all -p watch debug",
     "clean": "rimraf dist",
