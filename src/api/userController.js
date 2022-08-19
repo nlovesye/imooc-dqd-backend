@@ -3,8 +3,9 @@ import jwt from "jsonwebtoken";
 
 import { createResult } from "@/utils";
 import { JWT_SECRET } from "@/config";
-
-import sendMail from "../config/MailConfig";
+import sendMail from "@/config/MailConfig";
+import { checkCode } from "@/utils";
+import User from "@/model/User";
 
 class UserController {
   constructor() {}
@@ -62,6 +63,19 @@ class UserController {
   }
 
   async login(ctx) {
+    const { username, password, code, sid } = ctx.request.body;
+    const isCodePass = await checkCode(sid, code);
+    if (!isCodePass) {
+      ctx.status = 401;
+      ctx.body = createResult({ code: 401, msg: "验证码错误" });
+      return;
+    }
+    const user = await User.findOne({ username });
+    if (!user || password !== user.password) {
+      ctx.status = 401;
+      ctx.body = createResult({ code: 401, msg: "用户名或密码不正确" });
+      return;
+    }
     const token = jwt.sign(
       {
         data: "userId",
@@ -71,6 +85,7 @@ class UserController {
     );
     ctx.body = createResult({
       data: token,
+      msg: "登录成功",
     });
   }
 }

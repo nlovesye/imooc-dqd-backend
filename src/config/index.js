@@ -1,6 +1,6 @@
 const API_LISTENING_PORT = 7000;
 
-const DB_URL = "mongodb://test:123456@10.0.3.24/testdb";
+const DB_URL = "mongodb://dqd-test:123456@10.0.3.24/imooc-dqd-test";
 
 const REDIS = {
   host: "10.0.3.24",

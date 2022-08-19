@@ -7,6 +7,6 @@ router.prefix("/user");
 
 router.post("/forget", userController.forget);
 router.post("/getUserInfo", userController.getUserInfo);
-router.get("/login", userController.login);
+router.post("/login", userController.login);
 
 export default router;
