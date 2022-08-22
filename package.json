@@ -25,6 +25,7 @@
   "homepage": "https://github.com/nlovesye/imooc-dqd-koa#readme",
   "dependencies": {
     "@koa/cors": "3.3.0",
+    "bcrypt": "5.0.1",
     "bluebird": "3.7.2",
     "jsonwebtoken": "8.5.1",
     "koa": "2.13.4",

@@ -24,7 +24,9 @@ const middleware = compose([
   jsonUtil({ pretty: false, param: "pretty" }),
   helmet(),
   errorHandle,
-  jwt({ secret: JWT_SECRET }).unless({ path: [/^\/public/, /^\/user\/login/] }),
+  jwt({ secret: JWT_SECRET }).unless({
+    path: [/^\/public/, /^\/user\/login/, /^\/user\/reg/],
+  }),
 ]);
 
 if (!isDevMode) {

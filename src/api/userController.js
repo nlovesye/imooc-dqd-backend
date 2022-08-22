@@ -1,5 +1,6 @@
 import moment from "moment";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 import { createResult } from "@/utils";
 import { JWT_SECRET } from "@/config";
@@ -62,6 +63,7 @@ class UserController {
     }
   }
 
+  // 登录
   async login(ctx) {
     const { username, password, code, sid } = ctx.request.body;
     const isCodePass = await checkCode(sid, code);
@@ -71,7 +73,7 @@ class UserController {
       return;
     }
     const user = await User.findOne({ username });
-    if (!user || password !== user.password) {
+    if (!user || !bcrypt.compare(password, user.password)) {
       ctx.status = 401;
       ctx.body = createResult({ code: 401, msg: "用户名或密码不正确" });
       return;
@@ -87,6 +89,38 @@ class UserController {
       data: token,
       msg: "登录成功",
     });
+  }
+
+  // 注册
+  async reg(ctx) {
+    const { username, nickName, password, code, sid } = ctx.request.body;
+    const isCodePass = await checkCode(sid, code);
+    if (!isCodePass) {
+      ctx.status = 401;
+      ctx.body = createResult({ code: 401, msg: "验证码已失效，请重新获取" });
+      return;
+    }
+    let user = await User.findOne({ username });
+    if (user && username === user.username) {
+      ctx.status = 500;
+      ctx.body = createResult({ code: 500, msg: "用户名已被使用" });
+      return;
+    }
+    user = await User.findOne({ nickName });
+    if (user && nickName === user.nickName) {
+      ctx.status = 500;
+      ctx.body = createResult({ code: 500, msg: "昵称已被使用" });
+      return;
+    }
+    const bcryptPassword = await bcrypt.hash(password, 5);
+    const newUser = new User({
+      username,
+      nickName,
+      password: bcryptPassword,
+      created: moment().format("YYYY-MM-DD HH:mm:ss"),
+    });
+    const result = await newUser.save();
+    ctx.body = createResult({ data: result, msg: "注册成功" });
   }
 }
 
