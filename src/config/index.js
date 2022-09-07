@@ -1,10 +1,12 @@
+const SERVER_HOST = "192.168.1.99";
+
 const API_LISTENING_PORT = 7000;
 
-const DB_URL = "mongodb://dqd-test:123456@10.0.3.24/imooc-dqd-test";
+const DB_URL = `mongodb://admin_dqd_prod:123456@${SERVER_HOST}/dqd_prod`;
 
 const REDIS = {
-  host: "10.0.3.24",
-  port: 21010,
+  host: SERVER_HOST,
+  port: 27020,
   password: "123456",
 };
 
