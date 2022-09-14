@@ -1,6 +1,6 @@
-const SERVER_HOST = "192.168.1.99";
+const SERVER_HOST = "nlovesye.tpddns.cn";
 
-const API_LISTENING_PORT = 7000;
+const API_LISTENING_PORT = 7500;
 
 const DB_URL = `mongodb://admin_dqd_prod:123456@${SERVER_HOST}/dqd_prod`;
 
