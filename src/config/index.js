@@ -1,6 +1,8 @@
 const SERVER_HOST = "nlovesye.tpddns.cn";
 
-const API_LISTENING_PORT = 7500;
+const isProdMode = process.env.NODE_ENV === "production";
+
+const API_LISTENING_PORT = isProdMode ? 10010 : 7500;
 
 const DB_URL = `mongodb://admin_dqd_prod:123456@${SERVER_HOST}/dqd_prod`;
 
