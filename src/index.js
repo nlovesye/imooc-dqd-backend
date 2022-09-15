@@ -36,7 +36,6 @@ if (!isDevMode) {
 app.use(middleware);
 app.use(router());
 
-// listening
 app.listen(API_LISTENING_PORT, () => {
   console.log(`>>> RESTFUL API listening on port: ${API_LISTENING_PORT}`);
 });
