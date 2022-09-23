@@ -20,7 +20,11 @@ const isDevMode = process.env.NODE_ENV !== "production";
 const middleware = compose([
   koaBody(),
   statics(path.join(__dirname, "../public")),
-  cors(),
+  cors({
+    origin: function (ctx) {
+      return "*";
+    },
+  }),
   jsonUtil({ pretty: false, param: "pretty" }),
   helmet(),
   errorHandle,
