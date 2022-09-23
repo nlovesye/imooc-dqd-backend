@@ -8,6 +8,7 @@ import cors from "@koa/cors";
 import compose from "koa-compose";
 import compress from "koa-compress";
 import jwt from "koa-jwt";
+import logger from 'koa-logger'
 
 import router from "./routes";
 import { JWT_SECRET, API_LISTENING_PORT } from "./config";
@@ -18,13 +19,10 @@ const app = new Koa();
 const isDevMode = process.env.NODE_ENV !== "production";
 
 const middleware = compose([
+  logger(),
   koaBody(),
   statics(path.join(__dirname, "../public")),
-  cors({
-    origin: function (ctx) {
-      return "*";
-    },
-  }),
+  cors(),
   jsonUtil({ pretty: false, param: "pretty" }),
   helmet(),
   errorHandle,

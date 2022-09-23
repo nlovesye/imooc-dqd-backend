@@ -5,6 +5,11 @@ import { createResult } from "@/utils";
 class PublicController {
   constructor() {}
 
+  async test(ctx) {
+    const { name } = ctx.request.query;
+    ctx.body = createResult({ data: name || "visitor" });
+  }
+
   async getCaptcha(ctx) {
     const { sid } = ctx.request.query;
     const captcha = svgCaptcha.create({
